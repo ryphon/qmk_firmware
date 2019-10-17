@@ -213,4 +213,4 @@ else
 fi
 
 # Global install tasks
-pip3 install -r ${util_dir}/../requirements.txt
+pip install -r ${util_dir}/../requirements.txt
