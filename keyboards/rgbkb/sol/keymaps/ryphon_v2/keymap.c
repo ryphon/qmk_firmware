@@ -30,19 +30,19 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Qwerty
-   * ,------------------------------------------------.  ,------------------------------------------------.
-   * | GESC |   1  |   2  |   3  |   4  |   5  |   -  |  |   =  |   6  |   7  |   8  |   9  |   0  | BkSp |
-   * |------+------+------+------+------+------|------|  |------|------+------+------+------+------+------|
-   * | Tab  |   Q  |   W  |   E  |   R  |   T  |   [  |  |   ]  |   Y  |   U  |   I  |   O  |   P  |   \  |
-   * |------+------+------+------+------+------|------|  |------|------+------+------+------+------+------|
-   * |  FN  |   A  |   S  |   D  |   F  |   G  |   O  |  |  O   |   H  |   J  |   K  |   L  |   ;  |   '  |
-   * |------+------+------+------+------+------+  LED |  | LED  +------+------+------+------+------+------|
-   * |Shift |   Z  |   X  |   C  |   V  |   B  |      |  |      |   N  |   M  |   ,  |   .  |   /  |FN(CAPS)|
-   * |------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-   * | Ctrl |  FN  |  RGB |  Win | Alt  | Space| DEL  |  | Enter| Space|RGBMEN| Prev |Pause | Next | Ctrl |
-   * |------+------+------+------+------+------+------|  |------+------+------+------+------+------+------'
-   *                                    | Space| DEL  |  | Enter| Space|
-   *                                    `-------------'  `-------------'
+   * ,------------------------------------------------.                      ,------------------------------------------------.
+   * | GESC |   1  |   2  |   3  |   4  |   5  |   -  |                      |   =  |   6  |   7  |   8  |   9  |   0  | BkSp |
+   * |------+------+------+------+------+------|------|                      |------|------+------+------+------+------+------|
+   * | Tab  |   Q  |   W  |   E  |   R  |   T  |   [  |                      |   ]  |   Y  |   U  |   I  |   O  |   P  |   \  |
+   * |------+------+------+------+------+------|------|                      |------|------+------+------+------+------+------|
+   * |  FN  |   A  |   S  |   D  |   F  |   G  |   O  |                      |  O   |   H  |   J  |   K  |   L  |   ;  |   '  |
+   * |------+------+------+------+------+------+  LED |                      | LED  +------+------+------+------+------+------|
+   * |Shift |   Z  |   X  |   C  |   V  |   B  |      |                      |      |   N  |   M  |   ,  |   .  |   /  |FN(CAPS)|
+   * |------+------+------+------+------+------+------|                      |------+------+------+------+------+------+------|
+   * | Ctrl |  FN  |  RGB |  Win | Alt  | Space| DEL  |                      | Enter| Space|RGBMEN| Prev |Pause | Next | Ctrl |
+   * |------+------+------+------+------+------+------|                      |------+------+------+------+------+------+------'
+   *                                    | Space| DEL  |                      | Enter| Space|
+   *                                    `-------------'                      `-------------'
    */
   [_QWERTY] = LAYOUT( \
     KC_GESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, KC_MINS,  KC_EQL,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC, \
@@ -54,24 +54,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   /* FN
-   * ,------------------------------------------------.  ,------------------------------------------------.
-   * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | PSCR |  | PSCR |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
-   * |------+------+------+------+------+------|------|  |------|------+------+------+------+------+------|
-   * |      | PGDN |  UP  | PGUP |      |      | NLCK |  | SLCK |      |      | PGDN |  UP  | PGUP |      |
-   * |------+------+------+------+------+------|------|  |------|------+------+------+------+------+------|
-   * |      | LEFT | DOWN | RIGHT|      |      |      |  |      | HOME |      | LEFT | DOWN | RIGHT|      |
-   * |------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |  |      | END  |      |      |      |      |      |
-   * |------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-   * |      |      |      |RGBMOD|      |      |      |  |      |      | PLAY | NEXT | MUTE | VOL- | VOL+ |
-   * `------+------+------+------+------+------+------|  |------+------+------+------+------+------+------'
-   *                                    |      |      |  |      |      |
-   *                                    `-------------'  `-------------'
+   * ,------------------------------------------------.                     ,------------------------------------------------.
+   * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | PSCR |                     | PSCR |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
+   * |------+------+------+------+------+------|------|                     |------|------+------+------+------+------+------|
+   * |      | PGDN |  UP  | PGUP |      |      | NLCK |                     | SLCK |      | PGDN |  UP  | PGUP |      |      |
+   * |------+------+------+------+------+------|------|                     |------|------+------+------+------+------+------|
+   * |      | LEFT | DOWN | RIGHT|      |      |      |                     |      | HOME | LEFT | DOWN | RIGHT|      |      |
+   * |------+------+------+------+------+------+------|                     |------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |                     |      | END  |      |      |      |      | VOL+ |
+   * |------+------+------+------+------+------+------|                     |------+------+------+------+------+------+------|
+   * |      |      |      |RGBMOD|      |      |      |                     |      |      |      | Prev |Pause | Next | VOL- |
+   * `------+------+------+------+------+------+------|                     |------+------+------+------+------+------+------'
+   *                                    |      |      |                     |      |      |
+   *                                    `-------------'                     `-------------'
    */
   [_FN] = LAYOUT( \
       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_PSCR, KC_PSCR,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12, \
-    _______, KC_PGDN,   KC_UP, KC_PGUP, _______, _______, KC_NLCK, KC_SLCK, _______, _______, KC_PGDN,   KC_UP, KC_PGUP, _______, \
-    _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, KC_HOME, _______, KC_LEFT, KC_DOWN, KC_RGHT,  KC_INS, \
+    _______, KC_PGDN,   KC_UP, KC_PGUP, _______, _______, KC_NLCK, KC_SLCK, _______, KC_PGDN,   KC_UP, KC_PGUP, _______, _______, \
+    _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, _______,  KC_INS, \
     _______, _______, _______, _______, _______, _______, _______, _______,  KC_END, _______, _______, _______, _______, KC_VOLU, \
     _______, _______, _______, RGB_MOD, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD, \
                                                  _______, _______, _______, _______ \
@@ -171,12 +171,12 @@ typedef void (*rgb_f)(void);
 
 const rgb_f rgb_functions[RGB_FUNCTION_COUNT][2] = {
 #if defined(RGB_MATRIX_ENABLE)
-    {    rgb_matrix_decrease_hue   ,   rgb_matrix_increase_hue   },
-    {    rgb_matrix_decrease_sat   ,   rgb_matrix_increase_sat   },
-    {    rgb_matrix_decrease_val   ,   rgb_matrix_increase_val   },
-    {    rgb_matrix_decrease_speed ,   rgb_matrix_increase_speed },
-    {    rgb_matrix_step_reverse   ,   rgb_matrix_step           },
-    {    rgb_matrix_decrease_flags ,   rgb_matrix_increase_flags }
+    { rgb_matrix_decrease_hue   ,   rgb_matrix_increase_hue   },
+    { rgb_matrix_decrease_sat   ,   rgb_matrix_increase_sat   },
+    { rgb_matrix_decrease_val   ,   rgb_matrix_increase_val   },
+    { rgb_matrix_decrease_speed ,   rgb_matrix_increase_speed },
+    { rgb_matrix_step_reverse   ,   rgb_matrix_step           },
+    { rgb_matrix_decrease_flags ,   rgb_matrix_increase_flags }
 #elif defined(RGBLIGHT_ENABLE)
     { rgblight_increase_hue,        rgblight_decrease_hue       },
     { rgblight_increase_sat,        rgblight_decrease_sat       },
@@ -267,12 +267,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef RGB_OLED_MENU
       if (record->event.pressed) {
         if (get_mods() & MOD_MASK_SHIFT) {
-          rgb_encoder_state = (rgb_encoder_state + 1) % 6;
-        } else {
           rgb_encoder_state = (rgb_encoder_state - 1);
           if (rgb_encoder_state > 5) {
             rgb_encoder_state = 5;
           }
+        } else {
+          rgb_encoder_state = (rgb_encoder_state + 1) % 6;
         }
       }
 #endif
