@@ -70,10 +70,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_FN] = LAYOUT( \
       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_PSCR, KC_PSCR,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12, \
-    _______, KC_PGDN,   KC_UP, KC_PGUP, _______, _______, KC_NLCK, KC_SLCK, _______, _______,  KC_PGDN,   KC_UP, KC_PGUP, _______, \
-    _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, KC_HOME, _______ , KC_LEFT, KC_DOWN, KC_RGHT, KC_INS, \
-    _______, _______, _______, _______, _______, _______, _______, _______,  KC_END, _______, _______, _______, _______, _______, \
-    _______, _______, _______, RGB_MOD, _______, _______, _______, _______, _______, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, \
+    _______, KC_PGDN,   KC_UP, KC_PGUP, _______, _______, KC_NLCK, KC_SLCK, _______, _______, KC_PGDN,   KC_UP, KC_PGUP, _______, \
+    _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, KC_HOME, _______, KC_LEFT, KC_DOWN, KC_RGHT,  KC_INS, \
+    _______, _______, _______, _______, _______, _______, _______, _______,  KC_END, _______, _______, _______, _______, KC_VOLU, \
+    _______, _______, _______, RGB_MOD, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD, \
                                                  _______, _______, _______, _______ \
   ),
 
@@ -161,16 +161,31 @@ void rgb_matrix_decrease_flags(void)
 #ifdef RGB_OLED_MENU
 uint8_t rgb_encoder_state = 4;
 
-typedef void (*rgb_matrix_f)(void);
+#if defined(RGB_MATRIX_ENABLE)
+    #define RGB_FUNCTION_COUNT 6
+#elif defined(RGBLIGHT_ENABLE)
+    #define RGB_FUNCTION_COUNT 5
+#endif
 
-const rgb_matrix_f rgb_matrix_functions[6][2] = {
-    { rgb_matrix_increase_hue, rgb_matrix_decrease_hue },
-    { rgb_matrix_increase_sat, rgb_matrix_decrease_sat },
-    { rgb_matrix_increase_val, rgb_matrix_decrease_val },
-    { rgb_matrix_increase_speed, rgb_matrix_decrease_speed },
-    { rgb_matrix_step, rgb_matrix_step_reverse },
-    { rgb_matrix_increase_flags, rgb_matrix_decrease_flags }
+typedef void (*rgb_f)(void);
+
+const rgb_f rgb_functions[RGB_FUNCTION_COUNT][2] = {
+#if defined(RGB_MATRIX_ENABLE)
+    {    rgb_matrix_decrease_hue   ,   rgb_matrix_increase_hue   },
+    {    rgb_matrix_decrease_sat   ,   rgb_matrix_increase_sat   },
+    {    rgb_matrix_decrease_val   ,   rgb_matrix_increase_val   },
+    {    rgb_matrix_decrease_speed ,   rgb_matrix_increase_speed },
+    {    rgb_matrix_step_reverse   ,   rgb_matrix_step           },
+    {    rgb_matrix_decrease_flags ,   rgb_matrix_increase_flags }
+#elif defined(RGBLIGHT_ENABLE)
+    { rgblight_increase_hue,        rgblight_decrease_hue       },
+    { rgblight_increase_sat,        rgblight_decrease_sat       },
+    { rgblight_increase_val,        rgblight_decrease_val       },
+    { rgblight_increase_speed,      rgblight_decrease_speed     },
+    { rgblight_step,                rgblight_step_reverse       }
+#endif
 };
+
 #endif
 
 #ifdef ENCODER_ENABLE
@@ -180,8 +195,8 @@ static pin_t encoders_pad_a[] = ENCODERS_PAD_A;
 
 const uint16_t PROGMEM encoders[][NUMBER_OF_ENCODERS * 2][2]  = {
     [_QWERTY] = ENCODER_LAYOUT( \
-        KC_VOLU, KC_VOLD,
-        KC_VOLU, KC_VOLD
+        _______, _______,
+        _______, _______
     ),
     [_FN] = ENCODER_LAYOUT( \
         _______, _______,
@@ -199,7 +214,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
 #ifdef RGB_OLED_MENU
   if (index == RGB_OLED_MENU) {
-    (*rgb_matrix_functions[rgb_encoder_state][clockwise])();
+    (*rgb_functions[rgb_encoder_state][clockwise])();
   } else
 #endif
   {
@@ -252,12 +267,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef RGB_OLED_MENU
       if (record->event.pressed) {
         if (get_mods() & MOD_MASK_SHIFT) {
+          rgb_encoder_state = (rgb_encoder_state + 1) % 6;
+        } else {
           rgb_encoder_state = (rgb_encoder_state - 1);
           if (rgb_encoder_state > 5) {
             rgb_encoder_state = 5;
           }
-        } else {
-          rgb_encoder_state = (rgb_encoder_state + 1) % 6;
         }
       }
 #endif
