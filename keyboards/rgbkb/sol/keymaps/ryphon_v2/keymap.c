@@ -178,11 +178,11 @@ const rgb_f rgb_functions[RGB_FUNCTION_COUNT][2] = {
     { rgb_matrix_step_reverse   ,   rgb_matrix_step           },
     { rgb_matrix_decrease_flags ,   rgb_matrix_increase_flags }
 #elif defined(RGBLIGHT_ENABLE)
-    { rgblight_increase_hue,        rgblight_decrease_hue       },
-    { rgblight_increase_sat,        rgblight_decrease_sat       },
-    { rgblight_increase_val,        rgblight_decrease_val       },
-    { rgblight_increase_speed,      rgblight_decrease_speed     },
-    { rgblight_step,                rgblight_step_reverse       }
+    { rgblight_decrease_hue     ,   rgblight_increase_hue     },
+    { rgblight_decrease_sat     ,   rgblight_increase_sat     },
+    { rgblight_decrease_val     ,   rgblight_increase_val     },
+    { rgblight_decrease_speed   ,   rgblight_increase_speed   },
+    { rgblight_step_reverse     ,   rgblight_step             }
 #endif
 };
 
@@ -268,8 +268,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         if (get_mods() & MOD_MASK_SHIFT) {
           rgb_encoder_state = (rgb_encoder_state - 1);
-          if (rgb_encoder_state > 5) {
-            rgb_encoder_state = 5;
+          if (rgb_encoder_state > 5) { rgb_encoder_state = 5;
           }
         } else {
           rgb_encoder_state = (rgb_encoder_state + 1) % 6;
