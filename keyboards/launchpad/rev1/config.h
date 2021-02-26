@@ -19,12 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.h"
 
-#define DEVICE_VER      0x0001
+#define DEVICE_VER 0x0001
 
 /* Let's Macro V2 pin-out */
-#define MATRIX_ROW_PINS { C6, B1, B3, D7 }
-#define MATRIX_COL_PINS { D2, F7 }
+#define MATRIX_ROW_PINS { B4, B13, B14, B3 }
+#define MATRIX_COL_PINS { A10, B8 }
 #define UNUSED_PINS
+#define CONVERT_TO_PROTON_C_RXLED
 
 #define DIODE_DIRECTION COL2ROW
 
