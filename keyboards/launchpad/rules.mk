@@ -10,7 +10,6 @@ MCU = STM32F303
 #   ATmega32A    bootloadHID
 #   ATmega328P   USBasp
 # BOOTLOADER = caterina
-BOOTLOADER = caterina
 
 # Build Options
 #   change yes to no to disable
