@@ -47,6 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DIODE_DIRECTION COL2ROW
 
 #define OLED_FONT_H "keyboards/mechwild/murphpad/lib/murphpadfont.c"
+#define OLED_TIMEOUT 0
 
 #define RGB_DI_PIN F4
 #ifdef RGB_DI_PIN
