@@ -1,8 +1,5 @@
 /*
-This is the c configuration file for the keymap
-
-Copyright 2012 Jun Wako <wakojun@gmail.com>
-Copyright 2015 Jack Humbert
+Copyright 2021 Fernando "ManoShu" Rodrigues
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,9 +17,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+<<<<<<< HEAD:keyboards/rgbkb/sol/keymaps/ryphonsol1/config.h
 #define SSD1306OLED
 #define USE_I2C
 #define USE_SERIAL
 
 // place overrides here
+=======
+#include "config_common.h"
+
+/* disable these deprecated features by default */
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+>>>>>>> 93e55605d9f2de7f214a003058bcefbb5a5a0e00:keyboards/handwired/baredev/rev1/config.h
 
