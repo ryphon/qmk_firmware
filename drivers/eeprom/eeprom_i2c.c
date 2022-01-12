@@ -16,6 +16,9 @@
 
 #include <stdint.h>
 #include <string.h>
+#if defined(EXTERNAL_EEPROM_WP_PIN)
+#    include "gpio.h"
+#endif
 
 /*
     Note that the implementations of eeprom_XXXX_YYYY on AVR are normally
@@ -37,17 +40,10 @@
 
 // #define DEBUG_EEPROM_OUTPUT
 
-#ifdef DEBUG_EEPROM_OUTPUT
-#    include "print.h"
+#if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
+#    include "timer.h"
+#    include "debug.h"
 #endif  // DEBUG_EEPROM_OUTPUT
-
-static inline void init_i2c_if_required(void) {
-    static int done = 0;
-    if (!done) {
-        i2c_init();
-        done = 1;
-    }
-}
 
 static inline void fill_target_address(uint8_t *buffer, const void *addr) {
     uintptr_t p = (uintptr_t)addr;
@@ -57,10 +53,17 @@ static inline void fill_target_address(uint8_t *buffer, const void *addr) {
     }
 }
 
-void eeprom_driver_init(void) {}
+void eeprom_driver_init(void) {
+    i2c_init();
+#if defined(EXTERNAL_EEPROM_WP_PIN)
+    /* We are setting the WP pin to high in a way that requires at least two bit-flips to change back to 0 */
+    writePin(EXTERNAL_EEPROM_WP_PIN, 1);
+    setPinInputHigh(EXTERNAL_EEPROM_WP_PIN);
+#endif
+}
 
 void eeprom_driver_erase(void) {
-#ifdef CONSOLE_ENABLE
+#if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
     uint32_t start = timer_read32();
 #endif
 
@@ -70,7 +73,7 @@ void eeprom_driver_erase(void) {
         eeprom_write_block(buf, (void *)(uintptr_t)addr, EXTERNAL_EEPROM_PAGE_SIZE);
     }
 
-#ifdef CONSOLE_ENABLE
+#if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
     dprintf("EEPROM erase took %ldms to complete\n", ((long)(timer_read32() - start)));
 #endif
 }
@@ -79,11 +82,10 @@ void eeprom_read_block(void *buf, const void *addr, size_t len) {
     uint8_t complete_packet[EXTERNAL_EEPROM_ADDRESS_SIZE];
     fill_target_address(complete_packet, addr);
 
-    init_i2c_if_required();
     i2c_transmit(EXTERNAL_EEPROM_I2C_ADDRESS((uintptr_t)addr), complete_packet, EXTERNAL_EEPROM_ADDRESS_SIZE, 100);
     i2c_receive(EXTERNAL_EEPROM_I2C_ADDRESS((uintptr_t)addr), buf, len, 100);
 
-#ifdef DEBUG_EEPROM_OUTPUT
+#if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
     dprintf("[EEPROM R] 0x%04X: ", ((int)addr));
     for (size_t i = 0; i < len; ++i) {
         dprintf(" %02X", (int)(((uint8_t *)buf)[i]));
@@ -97,7 +99,11 @@ void eeprom_write_block(const void *buf, void *addr, size_t len) {
     uint8_t * read_buf    = (uint8_t *)buf;
     uintptr_t target_addr = (uintptr_t)addr;
 
-    init_i2c_if_required();
+#if defined(EXTERNAL_EEPROM_WP_PIN)
+    setPinOutput(EXTERNAL_EEPROM_WP_PIN);
+    writePin(EXTERNAL_EEPROM_WP_PIN, 0);
+#endif
+
     while (len > 0) {
         uintptr_t page_offset  = target_addr % EXTERNAL_EEPROM_PAGE_SIZE;
         int       write_length = EXTERNAL_EEPROM_PAGE_SIZE - page_offset;
@@ -110,7 +116,7 @@ void eeprom_write_block(const void *buf, void *addr, size_t len) {
             complete_packet[EXTERNAL_EEPROM_ADDRESS_SIZE + i] = read_buf[i];
         }
 
-#ifdef DEBUG_EEPROM_OUTPUT
+#if defined(CONSOLE_ENABLE) && defined(DEBUG_EEPROM_OUTPUT)
         dprintf("[EEPROM W] 0x%04X: ", ((int)target_addr));
         for (uint8_t i = 0; i < write_length; i++) {
             dprintf(" %02X", (int)(read_buf[i]));
@@ -125,4 +131,10 @@ void eeprom_write_block(const void *buf, void *addr, size_t len) {
         target_addr += write_length;
         len -= write_length;
     }
+
+#if defined(EXTERNAL_EEPROM_WP_PIN)
+    /* We are setting the WP pin to high in a way that requires at least two bit-flips to change back to 0 */
+    writePin(EXTERNAL_EEPROM_WP_PIN, 1);
+    setPinInputHigh(EXTERNAL_EEPROM_WP_PIN);
+#endif
 }
