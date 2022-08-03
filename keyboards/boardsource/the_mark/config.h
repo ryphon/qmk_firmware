@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Boardsource
+Copyright 2022 Boardsource
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,49 +16,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
-
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID    0x4273 // "Bs" - Boardsource
-#define PRODUCT_ID   0x0001
-#define DEVICE_VER   0x0001
-#define MANUFACTURER Boardsource
-#define PRODUCT      The Mark65
-
-/* key matrix size */
-#define MATRIX_ROWS 5
-#define MATRIX_COLS 16
-
-/*
- * Keyboard Matrix Assignments
- *
- * Change this to how you wired your keyboard
- * COLS: AVR pins used for columns, left to right
- * ROWS: AVR pins used for rows, top to bottom
- * DIODE_DIRECTION: COL2ROW = COL = Anode (+), ROW = Cathode (-, marked on diode)
- *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
- *
- */
-
-#define MATRIX_ROW_PINS {B0, B1, B2, B3, B4}
-#define MATRIX_COL_PINS {B5, B6, B7, F5, C7, D0, D1, D2, D3, D4, D5, D6, D7,F0, F1, F4}
-#define UNUSED_PINS
-
-/* COL2ROW, ROW2COL */
-#define DIODE_DIRECTION COL2ROW
-#define RGBLIGHT_ANIMATIONS
-#define RGB_DI_PIN C6
-#ifdef RGBLIGHT_ENABLE
-#define RGBLED_NUM 24    // Number of LEDs
-#define RGBLIGHT_LIMIT_VAL 200
-#endif
-
-/* RGB matrix support */
 #ifdef RGB_MATRIX_ENABLE
-#    define DRIVER_LED_TOTAL 24  // Number of LEDs
+#    define DRIVER_LED_TOTAL 24
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
-#    define RGB_DISABLE_WHEN_USB_SUSPENDED  // turn off effects when suspended
+#    define RGB_DISABLE_WHEN_USB_SUSPENDED
+#    define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
+#    define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
+#    define ENABLE_RGB_MATRIX_BREATHING
+#    define ENABLE_RGB_MATRIX_BAND_SAT
+#    define ENABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
+#    define ENABLE_RGB_MATRIX_BAND_SPIRAL_SAT
+#    define ENABLE_RGB_MATRIX_CYCLE_ALL
+#    define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+#    define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
+#    define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#    define ENABLE_RGB_MATRIX_CYCLE_PINWHEEL
+#    define ENABLE_RGB_MATRIX_CYCLE_SPIRAL
+#    define ENABLE_RGB_MATRIX_DUAL_BEACON
+#    define ENABLE_RGB_MATRIX_RAINBOW_BEACON
+#    define ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS
+#    define ENABLE_RGB_MATRIX_RAINDROPS
+#    define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
+#    define ENABLE_RGB_MATRIX_HUE_BREATHING
+#    define ENABLE_RGB_MATRIX_HUE_PENDULUM
+#    define ENABLE_RGB_MATRIX_HUE_WAVE
+#    define ENABLE_RGB_MATRIX_PIXEL_RAIN
+#    define ENABLE_RGB_MATRIX_PIXEL_FLOW
+#    define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+#    define ENABLE_RGB_MATRIX_TYPING_HEATMAP
+#    define ENABLE_RGB_MATRIX_DIGITAL_RAIN
+#    define ENABLE_RGB_MATRIX_SOLID_REACTIVE
+#    define ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
+#    define ENABLE_RGB_MATRIX_SOLID_REACTIVE_CROSS
+#    define ENABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS
+#    define ENABLE_RGB_MATRIX_SPLASH
+#    define ENABLE_RGB_MATRIX_MULTISPLASH
+#    define ENABLE_RGB_MATRIX_SOLID_SPLASH
 #endif
 
 /*
