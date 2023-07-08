@@ -181,8 +181,8 @@ static pin_t encoders_pad_a[] = ENCODERS_PAD_A;
 
 const uint16_t PROGMEM encoders[][NUMBER_OF_ENCODERS * 2][2]  = {
     [_QWERTY] = ENCODER_LAYOUT( \
-        _______, _______,
-        _______, _______
+        KC_NO, KC_NO,
+        KC_NO, KC_NO
     ),
     [_FN] = ENCODER_LAYOUT( \
         _______, _______,
